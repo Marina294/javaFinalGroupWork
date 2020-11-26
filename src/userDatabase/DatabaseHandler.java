@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author marina
+ * @restaurantReservation marina
  */
 public class DatabaseHandler {
     Connection conn = null;
@@ -26,7 +26,7 @@ public class DatabaseHandler {
     private void createConnection() {
         try{
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/testdb?user=root&password=password&useSSL=false"
+                    "jdbc:mysql://localhost/restaurantReservation?user=root&password=19901203&useSSL=false"
             );
             
         }catch(Exception e){
@@ -41,13 +41,13 @@ public class DatabaseHandler {
         
         return handler;
     }
-    public boolean insertUser(String firstName, String lastName, String email, String phone, String date, String time, String guests){
+    public boolean insertUser(String firstName, String lastName, String email, String phone){
         PreparedStatement preparedStatement = null;
         
         try{
             ResultSet resultSet;
             
-            String countEmails = "SELECT COUNT(*) FROM USERS WHERE email = ?";
+            String countEmails = "SELECT COUNT(*) FROM USER WHERE email = ?";
             
             preparedStatement = conn.prepareStatement(countEmails);
             preparedStatement.setString(1, email);
@@ -60,17 +60,17 @@ public class DatabaseHandler {
                 }
             }
             
-            String insertQuery = "INSERT INTO USERS (firstName, lastName, email, phone, date, time, guests) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO USER (firstName, lastName, email, phone) "
+                    + "VALUES (?, ?, ?, ?)";
             
             preparedStatement = conn.prepareStatement(insertQuery);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, email);
             preparedStatement.setString(4, phone);
-            preparedStatement.setString(5, date);
-            preparedStatement.setString(6, time);
-            preparedStatement.setString(7, guests);
+//            preparedStatement.setString(5, date);
+//            preparedStatement.setString(6, time);
+//            preparedStatement.setString(7, guests);
             
             int result = preparedStatement.executeUpdate();
             
@@ -83,7 +83,7 @@ public class DatabaseHandler {
     }
     
     public int checkCredentials(String email){
-        String query = "SELECT id FROM USERS WHERE email = ?";
+        String query = "SELECT id FROM USER WHERE email = ? ";
         
         PreparedStatement preparedStatement = null;
         
