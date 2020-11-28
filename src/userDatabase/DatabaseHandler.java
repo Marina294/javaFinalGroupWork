@@ -47,7 +47,7 @@ public class DatabaseHandler {
         try{
             ResultSet resultSet;
             
-            String countEmails = "SELECT COUNT(*) FROM USER WHERE email = ?";
+            String countEmails = "SELECT COUNT(*) FROM USER WHERE user_email = ?";
             
             preparedStatement = conn.prepareStatement(countEmails);
             preparedStatement.setString(1, email);
@@ -60,7 +60,7 @@ public class DatabaseHandler {
                 }
             }
             
-            String insertQuery = "INSERT INTO USER (firstName, lastName, email, phone) "
+            String insertQuery = "INSERT INTO USER (user_firstName, user_lastName, user_email, user_phoneNumber) "
                     + "VALUES (?, ?, ?, ?)";
             
             preparedStatement = conn.prepareStatement(insertQuery);
@@ -83,7 +83,7 @@ public class DatabaseHandler {
     }
     
     public int checkCredentials(String email){
-        String query = "SELECT id FROM USER WHERE email = ? ";
+        String query = "SELECT id FROM USER WHERE user_email = ? ";
         
         PreparedStatement preparedStatement = null;
         
